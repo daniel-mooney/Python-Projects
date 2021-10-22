@@ -16,11 +16,8 @@ class Chess():
             ['1', 'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r']
         ])
 
-    def print_board(self):
-        print(self.board)
-
-    def move_piece(self, current_cord: str, move_to_coord: str):
-        pass
+    def move_piece(self, current_cord: str, move_coord: str, player_number: int):
+        return True
 
     def reset_board(self):
         self.board = np.array([
@@ -42,7 +39,22 @@ class Chess():
         key = 'Key: R - Rook, N - Knight, B - Bishop, K - King, Q - Queen, P - Pawn.'
 
         print('\nLowercase is player 1, uppercase is player 2, player 1 goes first.')
-        print(key, end = "\n\n")
+        print(key, end = "\n")
+
+        player_number = 1
+
+        while True:
+            print(f"\n{self.board}", end = "\n\n")
+
+            successful_move = False
+
+            while not successful_move:
+                current_coord = input(f"Player {player_number} - Choose a peice to move: ")
+                move_coord = input(f"Player {player_number} - Choose a square to move too: ")
+
+                successful_move = self.move_piece(current_coord, move_coord, player_number)           
+
+            player_number = 2 if player_number == 1 else 1
 
 
 
@@ -53,7 +65,6 @@ def grid_coord_to_num_coord(coord: str):
     return (row * 10) + column
 
 def grid_coord_to_index(coord: str):
-
     row_index = [8 ,7, 6, 5, 4, 3, 2, 1]
     
     row = row_index[int(coord[1]) - 1]
@@ -61,6 +72,15 @@ def grid_coord_to_index(coord: str):
 
     return (row, column)
 
+def check_valid_coords(coord: str):
+    if len(coord) != 2:
+        return False
+
+    if coord[0].isalpha() == False or coord[1].isdigit() == False:
+        return False
+
+    if ord(coord[0]) - 65 < 0 or ord(coord[0]) - 65 > 7:
+        return False
 
 
 
