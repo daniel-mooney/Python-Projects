@@ -1,4 +1,5 @@
 
-a, b = 5, 10
+a = "A1j8L"
+a= a.lower()
 
-min = a if a < b else b
+print(a)

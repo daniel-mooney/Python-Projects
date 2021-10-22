@@ -17,6 +17,19 @@ class Chess():
         ])
 
     def move_piece(self, current_cord: str, move_coord: str, player_number: int):
+        
+        current_cord = current_cord.upper()
+        move_coord = move_coord.upper()
+
+        #Error Checking
+        if not check_valid_coords(current_cord):
+            print(f"Error: Invalid co-ordinate input: {current_cord}", end = "\n\n")
+            return False
+
+        if not check_valid_coords(move_coord):
+            print(f"Error: Invalid co-ordinate input: {move_coord}", end = "\n\n")
+            return False
+        
         return True
 
     def reset_board(self):
@@ -50,7 +63,7 @@ class Chess():
 
             while not successful_move:
                 current_coord = input(f"Player {player_number} - Choose a peice to move: ")
-                move_coord = input(f"Player {player_number} - Choose a square to move too: ")
+                move_coord = input(f"Player {player_number} - Choose a square to move to: ")
 
                 successful_move = self.move_piece(current_coord, move_coord, player_number)           
 
@@ -75,12 +88,14 @@ def grid_coord_to_index(coord: str):
 def check_valid_coords(coord: str):
     if len(coord) != 2:
         return False
-
-    if coord[0].isalpha() == False or coord[1].isdigit() == False:
+    if not coord[0].isalpha() or not coord[1].isdigit():
         return False
-
     if ord(coord[0]) - 65 < 0 or ord(coord[0]) - 65 > 7:
         return False
+    if int(coord[1]) < 0 or int(coord[1]) > 8:
+        return False  
+
+    return True
 
 
 
