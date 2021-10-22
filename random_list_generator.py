@@ -1,5 +1,7 @@
 import random
 
+# Useful for creating large data files consisiting for numbers for other programs
+
 def generate_list(a, b, length, rounding = 2): 
 
     if type(a) == int and type(b) == int:
