@@ -1,6 +1,6 @@
 import random
 
-# Useful for creating large data files consisiting for numbers for other programs
+# Useful for creating large data files consisiting of numbers for other programs
 
 def generate_list(a, b, length, rounding = 2): 
 
