@@ -108,7 +108,7 @@ def check_valid_movement(current_coord: str, move_coord: str, player_number: int
     
     current_num = func.grid_coord_to_num_coord(current_coord)
     move_num = func.grid_coord_to_num_coord(move_coord)
-    square_difference = current_coord - move_num
+    square_difference = current_num - move_num
     start_row, start_column = func.grid_coord_to_index(current_coord)
     piece_type = (board[start_row][start_column]).upper()
 
@@ -138,14 +138,14 @@ def check_valid_movement(current_coord: str, move_coord: str, player_number: int
             if board[row][column] != '0':
                 return False
             
-            current_num -= lowest_divisor
+            current_num += lowest_divisor
 
     # Check if valid ending square
     end_row, end_column = func.grid_coord_to_index(move_coord)
     
-    if player_number == 1 and board[end_row][end_column].islower():
+    if player_number == 1 and (board[end_row][end_column]).islower():
         return False
-    elif player_number == 2 and board[end_row][end_column].isupper():
+    elif player_number == 2 and (board[end_row][end_column]).isupper():
         return False
 
     return True

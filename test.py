@@ -1,5 +1,4 @@
 
-a = "A1j8L"
-a= a.lower()
+a = '0'
 
-print(a)
+print(a.isupper())
