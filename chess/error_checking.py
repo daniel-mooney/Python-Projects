@@ -44,6 +44,10 @@ def check_valid_move(current_coord: str, move_coord: str, player_number: int, bo
     if not check_valid_square(current_num, move_num, piece_type, target_square, player_number):
         print(f"Error: Cannot move {piece_type}({current_coord} square) to {move_coord} square.")
         return False
+    
+    if not check_valid_movement(current_coord, move_coord, player_number, board):
+        print(f"Error: Invalid movement from {current_coord} to {move_coord}.")
+        return False
 
     return True
 
@@ -101,6 +105,56 @@ def valid_pawn_move(current_num: int, move_num: int, target_square: str, player_
     return True
 
 def check_valid_movement(current_coord: str, move_coord: str, player_number: int, board):
-    pass
+    
+    current_num = func.grid_coord_to_num_coord(current_coord)
+    move_num = func.grid_coord_to_num_coord(move_coord)
+    square_difference = current_coord - move_num
+    start_row, start_column = func.grid_coord_to_index(current_coord)
+    piece_type = (board[start_row][start_column]).upper()
+
+    divisors = [9, 10, 11]
+    lowest_divisor = min([d for d in divisors if square_difference % d == 0])
+
+    if square_difference == 0:
+        return False
+    
+    # Iterate through direction of movement
+    if square_difference > 0 and piece_type != 'N':
+        current_num -= lowest_divisor
+
+        while current_num > move_num:
+            row, column = func.num_coord_to_index(current_num)
+
+            if board[row][column] != '0':
+                return False
+            
+            current_num -= lowest_divisor
+    elif piece_type != 'N':
+        current_num += lowest_divisor
+
+        while current_num < move_num:
+            row, column = func.num_coord_to_index(current_num)
+
+            if board[row][column] != '0':
+                return False
+            
+            current_num -= lowest_divisor
+
+    # Check if valid ending square
+    end_row, end_column = func.grid_coord_to_index(move_coord)
+    
+    if player_number == 1 and board[end_row][end_column].islower():
+        return False
+    elif player_number == 2 and board[end_row][end_column].isupper():
+        return False
+
+    return True
+
+
+
+
+    
+
+
 
 
