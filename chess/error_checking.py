@@ -25,6 +25,7 @@ def check_valid_move(current_coord: str, move_coord: str, player_number: int, bo
 
     piece_bool = True if player_number == 1 else False
 
+    # Check through error types
     if board[current_row][current_col] == '0':
         print(f"Error: No piece found on square {current_coord}.")
         return False
@@ -36,30 +37,33 @@ def check_valid_move(current_coord: str, move_coord: str, player_number: int, bo
         print(player1_error) if piece_bool else print(player2_error)
         return False
     
+
     piece_type = board[current_row][current_col]
     target_square = board[move_row][move_col]
 
-    if not check_valid_movement(current_num, move_num, piece_type, target_square, player_number):
+    if not check_valid_square(current_num, move_num, piece_type, target_square, player_number):
         print(f"Error: Cannot move {piece_type}({current_coord} square) to {move_coord} square.")
         return False
 
     return True
 
-def check_valid_movement(current_num: int, move_num: int, piece_type: str, target_square: str, player_num: int):
+def check_valid_square(current_num: int, move_num: int, piece_type: str, target_square: str, player_num: int):
     
+    # Possible movements
     diagonals = [9, 11]
-    lateral_vertical = [1, 2, 3, 4, 5, 6, 7, 10]
+    lateral = [1, 2, 3, 4, 5, 6, 7, 10]
     knight = [8, 12, 19, 21]
     king = [1, 9, 10, 11]
 
     piece_type = piece_type.lower()
     square_difference = abs(current_num - move_num)
 
+    # Check movement
     if piece_type == 'k' and square_difference not in king:
         return False
-    elif piece_type == 'q' and not [1 for i in (diagonals + lateral_vertical) if square_difference % i == 0]:
+    elif piece_type == 'q' and (square_difference not in lateral and not [1 for i in diagonals if square_difference % i == 0] and square_difference % 10 != 0):
         return False
-    elif piece_type == 'r' and not [1 for i in lateral_vertical if square_difference % i == 0]:
+    elif piece_type == 'r' and (square_difference not in lateral and square_difference % 10 != 0):
         return False
     elif piece_type == 'n' and not [1 for i in knight if square_difference % i == 0]:
         return False
@@ -72,6 +76,7 @@ def check_valid_movement(current_num: int, move_num: int, piece_type: str, targe
 
 def valid_pawn_move(current_num: int, move_num: int, target_square: str, player_num: int):
     
+    # Possible movements
     pawn = [10]
     pawn_start = [10, 20]
     pawn_taking = [9, 11]
@@ -85,8 +90,7 @@ def valid_pawn_move(current_num: int, move_num: int, target_square: str, player_
     elif player_num == 2:
         starting_position = True if (current_num > 70 and current_num < 79) else False
 
-    print(square_difference, starting_position)
-
+    # Check movement scenarios
     if target_square == '0' and starting_position and square_difference not in pawn_start:
         return False
     elif target_square == '0' and not starting_position and square_difference not in pawn:
@@ -95,3 +99,8 @@ def valid_pawn_move(current_num: int, move_num: int, target_square: str, player_
         return False
     
     return True
+
+def check_valid_movement(current_coord: str, move_coord: str, player_number: int, board):
+    pass
+
+

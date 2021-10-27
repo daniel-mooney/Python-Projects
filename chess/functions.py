@@ -67,12 +67,16 @@ class Chess():
             print(f"\n{self.board}")
 
             successful_move = False
+            print(f"\nPlayer {player_number}'s go.")
 
             while not successful_move:
-                current_coord = input(f"\nPlayer {player_number} - Choose a piece to move: ")
-                move_coord = input(f"Player {player_number} - Choose a square to move to: ")
+                current_coord = input("Choose a piece to move: ")
+                move_coord = input("Choose a square to move to: ")
 
-                successful_move = self.move_piece(current_coord, move_coord, player_number)           
+                successful_move = self.move_piece(current_coord, move_coord, player_number)
+
+                if not successful_move:
+                    print(f"\nPlayer {player_number} please try again...")
 
             player_number = 2 if player_number == 1 else 1
 
@@ -98,5 +102,14 @@ def grid_coord_to_index(coord: str):
 
     row = row_index[int(coord[1]) - 1]
     column = ord(coord[0]) - 64
+
+    return (row, column)
+
+def num_coord_to_index(num_coord: int):
+    
+    row_index = [8 ,7, 6, 5, 4, 3, 2, 1]
+
+    row = row_index[num_coord // 10]
+    column = num_coord % 10
 
     return (row, column)
