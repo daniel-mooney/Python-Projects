@@ -1,4 +1,5 @@
 import numpy as np
+import error_checking as error
 
 class Chess():
     def __init__(self):
@@ -18,15 +19,15 @@ class Chess():
     def move_piece(self, current_cord: str, move_coord: str, player_number: int):
         
         #Error Checking
-        if not check_valid_coords(current_cord):
+        if not error.check_valid_coords(current_cord):
             print(f"Error: Invalid co-ordinate input: {current_cord}")
             return False
 
-        if not check_valid_coords(move_coord):
+        if not error.check_valid_coords(move_coord):
             print(f"Error: Invalid co-ordinate input: {move_coord}")
             return False
 
-        if not check_valid_move(current_cord, move_coord, player_number, self.board):
+        if not error.check_valid_move(current_cord, move_coord, player_number, self.board):
             return False
         
         return True
@@ -71,6 +72,9 @@ class Chess():
 
 
 def grid_coord_to_num_coord(coord: str):
+    """
+    Converts a grid co-ordinate into a numeric co-ordinate used to control movement
+    """
     coord = coord.upper()
 
     column = ord(coord[0]) - 64
@@ -89,39 +93,3 @@ def grid_coord_to_index(coord: str):
     column = ord(coord[0]) - 64
 
     return (row, column)
-
-def check_valid_coords(coord: str):
-    coord = coord.upper()
-
-    if len(coord) != 2:
-        return False
-    if not coord[0].isalpha() or not coord[1].isdigit():
-        return False
-    if ord(coord[0]) - 65 < 0 or ord(coord[0]) - 65 > 7:
-        return False
-    if int(coord[1]) < 0 or int(coord[1]) > 8:
-        return False  
-
-    return True
-
-def check_valid_move(current_coord: str, move_coord: str, player_number: int, board):
-    current_row, current_col = grid_coord_to_index(current_coord)
-    move_row, move_col = grid_coord_to_index(move_coord)
-
-    current_num = grid_coord_to_num_coord(current_coord)
-    move_num = grid_coord_to_num_coord(move_coord)
-
-    piece_bool = True if player_number == 1 else False
-
-    if board[current_row][current_col] == '0':
-        print(f"Error: No piece found on square {current_coord}.")
-        return False
-
-    if board[current_row][current_col].islower() != piece_bool:
-        player1_error = "Error: Player 1 uses lowercase pieces, not uppercase."
-        player2_error = "Error: Player 2 uses uppercase pieces, not lowercase."
-
-        print(player1_error) if piece_bool else print(player2_error)
-        return False
-    
-    return True
