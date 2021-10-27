@@ -149,12 +149,3 @@ def check_valid_movement(current_coord: str, move_coord: str, player_number: int
         return False
 
     return True
-
-
-
-
-    
-
-
-
-
