@@ -18,7 +18,7 @@ class Chess():
 
     def move_piece(self, current_cord: str, move_coord: str, player_number: int):
         
-        #Error Checking
+        # Error Checking
         if not error.check_valid_coords(current_cord):
             print(f"Error: Invalid co-ordinate input: {current_cord}")
             return False
@@ -30,6 +30,13 @@ class Chess():
         if not error.check_valid_move(current_cord, move_coord, player_number, self.board):
             return False
         
+        # Move piece
+        current_row, current_col = grid_coord_to_index(current_cord)
+        move_row, move_col = grid_coord_to_index(move_coord)
+
+        self.board[move_row][move_col] = self.board[current_row][current_col]
+        self.board[current_row][current_col] = '0'
+
         return True
 
     def reset_board(self):
