@@ -1,5 +1,6 @@
 import numpy as np
 import error_checking as error
+from colours import bcolours
 
 class Chess():
     def __init__(self):
@@ -20,11 +21,11 @@ class Chess():
         
         # Error Checking
         if not error.check_valid_coords(current_cord):
-            print(f"Error: Invalid co-ordinate input: {current_cord}")
+            print(bcolours.FAIL + f"Error: Invalid co-ordinate input: {current_cord}" + bcolours.ENDC)
             return False
 
         if not error.check_valid_coords(move_coord):
-            print(f"Error: Invalid co-ordinate input: {move_coord}")
+            print(bcolours.FAIL + f"Error: Invalid co-ordinate input: {move_coord}" + bcolours.ENDC)
             return False
 
         if not error.check_valid_move(current_cord, move_coord, player_number, self.board):

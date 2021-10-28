@@ -1,4 +1,5 @@
 import functions as func
+from colours import bcolours
 
 
 def check_valid_coords(coord: str):
@@ -27,14 +28,14 @@ def check_valid_move(current_coord: str, move_coord: str, player_number: int, bo
 
     # Check through error types
     if board[current_row][current_col] == '0':
-        print(f"Error: No piece found on square {current_coord}.")
+        print(bcolours.FAIL + f"Error: No piece found on square {current_coord}." + bcolours.ENDC)
         return False
 
     if board[current_row][current_col].islower() != piece_bool:
         player1_error = "Error: Player 1 uses lowercase pieces, not uppercase."
         player2_error = "Error: Player 2 uses uppercase pieces, not lowercase."
 
-        print(player1_error) if piece_bool else print(player2_error)
+        print(bcolours.FAIL + player1_error + bcolours.ENDC) if piece_bool else print(bcolours.FAIL + player2_error + bcolours.ENDC)
         return False
     
 
@@ -42,11 +43,11 @@ def check_valid_move(current_coord: str, move_coord: str, player_number: int, bo
     target_square = board[move_row][move_col]
 
     if not check_valid_square(current_num, move_num, piece_type, target_square, player_number):
-        print(f"Error: Cannot move {piece_type}({current_coord} square) to {move_coord} square.")
+        print(bcolours.FAIL + f"Error: Cannot move {piece_type}({current_coord} square) to {move_coord} square." + bcolours.ENDC)
         return False
     
     if not check_valid_movement(current_coord, move_coord, player_number, board):
-        print(f"Error: Invalid movement from {current_coord} to {move_coord}.")
+        print(bcolours.FAIL + f"Error: Invalid movement from {current_coord} to {move_coord}." + bcolours.ENDC)
         return False
 
     return True
