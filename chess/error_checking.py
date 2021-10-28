@@ -43,11 +43,17 @@ def check_valid_move(current_coord: str, move_coord: str, player_number: int, bo
     target_square = board[move_row][move_col]
 
     if not check_valid_square(current_num, move_num, piece_type, target_square, player_number):
-        print(bcolours.FAIL + f"Error: Cannot move {piece_type}({current_coord} square) to {move_coord} square." + bcolours.ENDC)
+        piece_type = piece_type.lower()
+        piece_dic = {'k': 'king', 'q': 'queen', 'b': 'bishop', 'n': 'knight', 'r': 'rook', 'p': 'pawn'}
+
+        piece = piece_dic[piece_type]
+        piece = piece.lower() if player_number == 1 else piece.upper()
+
+        print(bcolours.FAIL + f"Error: Cannot move {piece} ({current_coord} square) to {move_coord} square." + bcolours.ENDC)
         return False
     
     if not check_valid_movement(current_coord, move_coord, player_number, board):
-        print(bcolours.FAIL + f"Error: Invalid movement from {current_coord} to {move_coord}." + bcolours.ENDC)
+        print(bcolours.FAIL + f"Error: Movement blocked from {current_coord} to {move_coord}." + bcolours.ENDC)
         return False
 
     return True
@@ -114,13 +120,13 @@ def check_valid_movement(current_coord: str, move_coord: str, player_number: int
     piece_type = (board[start_row][start_column]).upper()
 
     divisors = [9, 10, 11]
-    lowest_divisor = min([d for d in divisors if square_difference % d == 0])
 
     if square_difference == 0:
         return False
     
     # Iterate through direction of movement
     if square_difference > 0 and piece_type != 'N':
+        lowest_divisor = min([d for d in divisors if square_difference % d == 0])
         current_num -= lowest_divisor
 
         while current_num > move_num:
@@ -131,6 +137,7 @@ def check_valid_movement(current_coord: str, move_coord: str, player_number: int
             
             current_num -= lowest_divisor
     elif piece_type != 'N':
+        lowest_divisor = min([d for d in divisors if square_difference % d == 0])
         current_num += lowest_divisor
 
         while current_num < move_num:
