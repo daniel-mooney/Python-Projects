@@ -102,11 +102,11 @@ def valid_pawn_move(current_num: int, move_num: int, target_square: str, player_
         starting_position = True if (current_num > 70 and current_num < 79) else False
 
     # Check movement scenarios
-    if target_square == '0' and starting_position and square_difference not in pawn_start:
+    if target_square != '0' and square_difference not in pawn_taking:
+        return False
+    elif target_square == '0' and starting_position and square_difference not in pawn_start:
         return False
     elif target_square == '0' and not starting_position and square_difference not in pawn:
-        return False
-    elif target_square != '0' and square_difference not in pawn_taking:
         return False
     
     return True
