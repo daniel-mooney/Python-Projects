@@ -16,6 +16,8 @@ class Chess():
             ['2', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
             ['1', 'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r']
         ])
+
+        self.moves = []
     
     def reset_board(self):
         self.board = np.array([
@@ -41,11 +43,21 @@ class Chess():
         print("-------------")
         print("Choose the piece you wish to move when prompted, make sure the case type matches your player type.")
         print("Enter the square you wish to move that piece to")
+        print(bcolours.BOLD + "Castle" + bcolours.ENDC + " - enter castle command when prompted to move piece to castle.")
 
+    def print_moves(self):
+        
+        if len(self.moves) > 1:
+
+            for i, move in enumerate(self.moves):
+                print(f"")
 
     def move_piece(self, current_cord: str, move_coord: str, player_number: int):
         
         # Error Checking
+        if current_cord == "castle":
+            return True
+
         if not error.check_valid_coords(current_cord):
             print(bcolours.FAIL + f"Error: Invalid co-ordinate input: {current_cord}" + bcolours.ENDC)
             return False
@@ -58,11 +70,18 @@ class Chess():
             return False
         
         # Move piece
+        current_cord = current_cord.upper()
+        move_coord = move_coord.upper()
+
         current_row, current_col = grid_coord_to_index(current_cord)
         move_row, move_col = grid_coord_to_index(move_coord)
 
+        move_info = (self.board[current_row][current_col], current_cord, self.board[move_row][move_col], move_coord)
+        self.moves.append(move_info)
+
         self.board[move_row][move_col] = self.board[current_row][current_col]
         self.board[current_row][current_col] = '0'
+
 
         return True
 
@@ -80,13 +99,18 @@ class Chess():
 
             while not successful_move:
                 current_coord = input("Choose a piece to move: ")
-                move_coord = input("Choose a square to move to: ")
+                current_coord = current_coord.lower()
+
+                if current_coord == "castle":
+                    move_coord = input("King(K) or Queen(Q) side: ")
+                else:
+                    move_coord = input("Choose a square to move to: ")
 
                 successful_move = self.move_piece(current_coord, move_coord, player_number)
 
                 if not successful_move:
                     print(f"\nPlayer {player_number} please try again...")
-
+        
             player_number = 2 if player_number == 1 else 1
 
 
@@ -95,7 +119,6 @@ def grid_coord_to_num_coord(coord: str):
     """
     Converts a grid co-ordinate into a numeric co-ordinate used to control movement
     """
-    coord = coord.upper()
 
     column = ord(coord[0]) - 64
     row = int(coord[1])
@@ -106,7 +129,6 @@ def grid_coord_to_index(coord: str):
     """
     Returns a tuple `(row, column)` for a given coordinate in the board matrix
     """
-    coord = coord.upper()
     row_index = [8 ,7, 6, 5, 4, 3, 2, 1]
 
     row = row_index[int(coord[1]) - 1]

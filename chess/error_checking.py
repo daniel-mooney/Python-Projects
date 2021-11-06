@@ -157,3 +157,6 @@ def check_valid_movement(current_coord: str, move_coord: str, player_number: int
         return False
 
     return True
+
+def valid_castle(king_coord: str, side: str, player_number: int ,board):
+    pass
