@@ -43,8 +43,9 @@ class Chess():
         print(bcolours.BOLD + bcolours.GREEN + "Control Guide" + bcolours.ENDC)
         print("-------------")
         print("Choose the piece you wish to move when prompted, make sure the case type matches your player type.")
-        print("Enter the square you wish to move that piece to")
-        print(bcolours.BOLD + "CASTLE" + bcolours.ENDC + " - enter castle command when prompted to move piece to castle.")
+        print("Enter the square you wish to move that piece to.", end="\n\n")
+        print("Other Commands:")
+        print(bcolours.BOLD + "CASTLE" + bcolours.ENDC + " - when you wish to castle your king.")
         print(bcolours.BOLD + "PRINT" + bcolours.ENDC + " - prints a list of all previous moves.")
 
     def print_moves(self):
