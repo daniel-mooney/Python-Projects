@@ -1,10 +1,12 @@
-def num_coord_to_index(num_coord: int):
-    
+def grid_coord_to_index(coord: str):
+    """
+    Returns a tuple `(row, column)` for a given coordinate in the board matrix
+    """
     row_index = [8 ,7, 6, 5, 4, 3, 2, 1]
 
-    row = row_index[num_coord // 10]
-    column = num_coord % 10
+    row = row_index[int(coord[1]) - 1]
+    column = ord(coord[0]) - 96
 
     return (row, column)
 
-print(num_coord_to_index(84))
+print(grid_coord_to_index('d4'))

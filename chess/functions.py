@@ -1,6 +1,7 @@
 import numpy as np
 import error_checking as error
 from colours import bcolours
+import math
 
 class Chess():
     def __init__(self):
@@ -43,14 +44,31 @@ class Chess():
         print("-------------")
         print("Choose the piece you wish to move when prompted, make sure the case type matches your player type.")
         print("Enter the square you wish to move that piece to")
-        print(bcolours.BOLD + "Castle" + bcolours.ENDC + " - enter castle command when prompted to move piece to castle.")
+        print(bcolours.BOLD + "CASTLE" + bcolours.ENDC + " - enter castle command when prompted to move piece to castle.")
+        print(bcolours.BOLD + "PRINT" + bcolours.ENDC + " - prints a list of all previous moves.")
 
     def print_moves(self):
         
-        if len(self.moves) > 1:
+        if len(self.moves) > 0:
+            print("Moves played:", end="\n\n")
 
-            for i, move in enumerate(self.moves):
-                print(f"")
+            for i in range( math.ceil(len(self.moves) / 2)):
+                if self.moves[2*i][2] != '0':
+                    piece = self.moves[2*i][0]
+                    move_coord = self.moves[2*i][2]
+
+                    print(f"{i+1}. {piece} - {move_coord}", end='')
+
+                if (2*i + 1) < len(self.moves):
+                    piece = self.moves[2*i + 1][0]
+                    move_coord = self.moves[2*i + 1][2]
+
+                    print(f", {piece} - {move_coord}")
+                else:
+                    print()
+            print()
+        else:
+            print("No moves played so far.", end="\n\n")
 
     def move_piece(self, current_cord: str, move_coord: str, player_number: int):
         
@@ -76,7 +94,7 @@ class Chess():
         current_row, current_col = grid_coord_to_index(current_cord)
         move_row, move_col = grid_coord_to_index(move_coord)
 
-        move_info = (self.board[current_row][current_col], current_cord, self.board[move_row][move_col], move_coord)
+        move_info = (self.board[current_row][current_col], self.board[move_row][move_col], move_coord)
         self.moves.append(move_info)
 
         self.board[move_row][move_col] = self.board[current_row][current_col]
@@ -101,6 +119,11 @@ class Chess():
                 current_coord = input("Choose a piece to move: ")
                 current_coord = current_coord.lower()
 
+                if current_coord == "print":
+                    self.print_moves()
+                    successful_move = False
+                    continue                    
+
                 if current_coord == "castle":
                     move_coord = input("King(K) or Queen(Q) side: ")
                 else:
@@ -119,6 +142,7 @@ def grid_coord_to_num_coord(coord: str):
     """
     Converts a grid co-ordinate into a numeric co-ordinate used to control movement
     """
+    coord = coord.upper()
 
     column = ord(coord[0]) - 64
     row = int(coord[1])
@@ -130,6 +154,7 @@ def grid_coord_to_index(coord: str):
     Returns a tuple `(row, column)` for a given coordinate in the board matrix
     """
     row_index = [8 ,7, 6, 5, 4, 3, 2, 1]
+    coord = coord.upper()
 
     row = row_index[int(coord[1]) - 1]
     column = ord(coord[0]) - 64
