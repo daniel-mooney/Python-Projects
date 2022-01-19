@@ -12,4 +12,4 @@ def generate_list(a, b, length, rounding = 2):
     return None
 
 
-print(generate_list(0, 150, 5))
+print(generate_list(0.0, 0.9, 5))

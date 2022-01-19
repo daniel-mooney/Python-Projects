@@ -1,12 +1,25 @@
-def grid_coord_to_index(coord: str):
-    """
-    Returns a tuple `(row, column)` for a given coordinate in the board matrix
-    """
-    row_index = [8 ,7, 6, 5, 4, 3, 2, 1]
+from matplotlib import pyplot as plt
+import numpy as np
+import math
 
-    row = row_index[int(coord[1]) - 1]
-    column = ord(coord[0]) - 96
+amp = 1
+decay = 0.5
+phase = 0
+ang_freq = 7
+offset = 16
 
-    return (row, column)
+f = lambda x: amp * math.exp(-decay * x) * (math.cos(ang_freq*x + phase) + math.sin(ang_freq*x + phase)) + offset
 
-print(grid_coord_to_index('d4'))
+step = 0.01
+x = np.arange(0, 10 + step, step)
+
+y = np.array(list(map(f, x)))
+w = np.full(len(x), offset)
+
+plt.plot(x, y, label = "motor speed")
+plt.plot(x, w, color = "red", label = "req. speed")
+plt.ylabel("Motor speed (RPM)")
+plt.xlabel("time (s)")
+plt.title("Motor Speed vs Time")
+plt.legend()
+plt.show()
