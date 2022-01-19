@@ -1,3 +1,7 @@
+# This Program takes in the hole cards (player hand) and community cards (river) as argument to the function
+# hand and returns what hand the player has got. It also returns this hand with required tiebreaker cards
+# to be used when necessary.
+
 def card_rank(card):
     # Converts a card into a more useful integer data type
     rank_conversions = {'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,
