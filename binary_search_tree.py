@@ -36,9 +36,11 @@ class BinaryTree:
             if node.key == current_node.key:
                 return False
             if node.key > current_node.key and not current_node.right:
+                print(current_node.key, node.key)
                 current_node.right = node
                 break
             if node.key < current_node.key and not current_node.left:
+                print(current_node.key, node.key)
                 current_node.left == node
                 break
 
@@ -53,4 +55,16 @@ class BinaryTree:
         return True
 
     def get_value(self, key: int) -> any:
-        pass
+        
+        current_node = self.base_node
+        print("get value")
+        while True:
+            # Loop intil node is found or bottom of tree reached
+            if not current_node:
+                break
+            if key == current_node.key:
+                return current_node.value
+            print(current_node.key)
+            current_node = current_node.right if key > current_node.key else current_node.left
+
+        return None    
