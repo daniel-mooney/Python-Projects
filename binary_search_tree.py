@@ -28,10 +28,14 @@ class BinaryTree:
         """
         if node == None:
             return None
+
+        if node.right:
+            self.add_node(node.right)
+            self.__movenodes(node.right)
+        if node.left:
+            self.add_node(node.left)
+            self.__movenodes(node.left)
         
-        self.add_node(node)
-        self.__movenodes(node.left)
-        self.__movenodes(node.right)
 
     def add_node(self, node: Node) -> bool:
         """
@@ -71,24 +75,25 @@ class BinaryTree:
         to the left node of base node as the new base node. If base node has no connected nodes,
         it is set as `None`. 
         """
-        current_node = self.base_node
+        if key == self.base_node.key:
+            removed_base = self.base_node
 
-        if key == self.base_node:
             left = self.base_node.left
             right = self.base_node.right
-
             self.base_node = left if left else right if right else None
+
+            self.__movenodes(removed_base)
+
+        current_node = self.base_node
 
         while current_node:
             # Loop until node is found or bottom of tree reached
-            if current_node.left.key == key:
-                self.__movenodes(current_node.left.left)        # Move removed node's children nodes
-                self.__movenodes(current_node.left.right)
+            if current_node.left and current_node.left.key == key:
+                self.__movenodes(current_node.left)        # Move removed node's children nodes
                 current_node.left = None
                 return True
-            if current_node.right.key == key:
-                self.__movenodes(current_node.right.left)       # Move removed node's children nodes
-                self.__movenodes(current_node.right.right)
+            if current_node.right and current_node.right.key == key:
+                self.__movenodes(current_node.right)       # Move removed node's children nodes
                 current_node.right = None
                 return True
 
