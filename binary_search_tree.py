@@ -16,8 +16,19 @@ class BinaryTree:
     def __init__(self, node: Node) -> None:
         self.base_node = node
     
-    def __balancetree__(self) -> None:
+    def __balancetree(self) -> None:
         pass
+
+    def __movenode(self, node: Node) -> None:
+        """
+        Used to move the nodes of a removed parent node to somewhere else in the tree.
+        """
+        if node == None:
+            return None
+        
+        self.add_node(node)
+        self.__movenode(node.left)
+        self.__movenode(node.right)
 
     def add_node(self, node: Node) -> bool:
         """
@@ -50,16 +61,30 @@ class BinaryTree:
         """
         Rebalances the tree afterwards.
         """
+        current_node = self.base_node
+        removed_node = None
+
+        while current_node:
+            # Loop until node is found or bottom of tree reached
+            if current_node.left.key == key:
+                removed_node = current_node.left
+                current_node.left = None
+                break
+            if current_node.right.key == key:
+                removed_node = current_node.right
+                current_node.right = None
+                break 
+
         return True
 
     def get_value(self, key: int) -> any:
-        
+        """
+        Returns `None` if passed key does not exist.
+        """
         current_node = self.base_node
 
-        while True:
+        while current_node:
             # Loop intil node is found or bottom of tree reached
-            if not current_node:
-                break
             if key == current_node.key:
                 return current_node.value
 
