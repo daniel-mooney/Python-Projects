@@ -90,7 +90,9 @@ class BinaryTree:
                 self.__movenodes(current_node.right.left)       # Move removed node's children nodes
                 self.__movenodes(current_node.right.right)
                 current_node.right = None
-                return True 
+                return True
+
+            current_node = current_node.right if key > current_node.key else current_node.left
 
         return False
 
