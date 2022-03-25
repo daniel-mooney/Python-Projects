@@ -19,21 +19,34 @@ class BinaryTree:
         self.base_node = node
     
     def __balancetree(self) -> None:
-
-        # Find the deepest path on left side of tree
-        pass
-
-    def __getdeepestpath(self, node: Node):
         """
-        Returns a list containing the nodes taken to reach the deepest node.
+        Priority is given to the left node if the left or right nodes in the middle of a deepest path
+        both form valid balanced trees.
         """
+
+        # Find deepest path on left and right side of the tree
+        left = self.getdeepestpath(self.base_node.left)
+        right = self.getdeepestpath(self.base_node.right)
+        left.reverse()
+
+        combined_path = left + [self.base_node] + right       
+        mid_point = len(combined_path) // 2 if len(combined_path) % 2 == 1 else len(combined_path) // 2 - 1
+
+        print([*map(lambda x: x.key, combined_path)])
+        print(mid_point)
+        print(combined_path[mid_point].key)
+        self.base_node = combined_path[mid_point]      
+
+
+    def getdeepestpath(self, node: Node) -> list:
+
         if not node:
             return []
         
-        left = self.__getdeepestpath(node.left)
-        right = self.__getdeepestpath(node.right)
+        left = self.getdeepestpath(node.left)
+        right = self.getdeepestpath(node.right)
 
-        deepest_path = max(left, right, key=len)
+        deepest_path = max(left, right, key = len)
 
         return [node] + deepest_path
 
@@ -82,6 +95,7 @@ class BinaryTree:
 
             current_node = current_node.right if node.key > current_node.key else current_node.left            
 
+        self.__balancetree()
         return True
     
     def remove_node(self, key: int) -> bool:
@@ -100,21 +114,25 @@ class BinaryTree:
             self.__movenodes(removed_base)
 
         current_node = self.base_node
+        removed = False
 
         while current_node:
             # Loop until node is found or bottom of tree reached
             if current_node.left and current_node.left.key == key:
                 self.__movenodes(current_node.left)        # Move removed node's children nodes
                 current_node.left = None
-                return True
+                removed = True
+                break
             if current_node.right and current_node.right.key == key:
                 self.__movenodes(current_node.right)       # Move removed node's children nodes
                 current_node.right = None
-                return True
+                removed = True
+                break
 
             current_node = current_node.right if key > current_node.key else current_node.left
 
-        return False
+        self.__balancetree()
+        return removed
 
     def get_value(self, key: int) -> any:
         """
