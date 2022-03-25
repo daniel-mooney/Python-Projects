@@ -1,16 +1,20 @@
-from Binary_Search_Tree.binary_search_tree import *
 
-tree = BinaryTree(Node(10, 24))
+from binary_search_tree import *
+tree = BinaryTree()
 
-tree.add_node(Node(5, "cool"))
-tree.add_node(Node(12, 4.23))
-tree.add_node(Node(11, 65))
-tree.add_node(Node(14, 4.29))
-tree.add_node(Node(13, 7.9))
-tree.add_node(Node(6, "ah"))
-x = tree.add_node(Node(8, "test"))
+tree.add_node(Node(25, "25"))
+tree.add_node(Node(10, "10"))
+tree.add_node(Node(28, "28"))
+tree.add_node(Node(6, "6"))
+tree.add_node(Node(15, "15"))
+tree.add_node(Node(26, "26"))
+tree.add_node(Node(35, "35"))
+tree.add_node(Node(7, "7"))
+tree.add_node(Node(12, "12"))
+tree.add_node(Node(18, "18"))
+tree.add_node(Node(30, "30"))
+tree.add_node(Node(40, "40"))
+tree.add_node(Node(29, "29"))
+tree.add_node(Node(17, "17"))
+tree.add_node(Node(16, "16"))
 
-y = tree.remove_node(10)
-
-print(tree.get_value(6))
-print(x, y)

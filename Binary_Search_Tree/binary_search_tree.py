@@ -1,4 +1,3 @@
-from asyncio import base_events
 
 
 class Node:
@@ -20,7 +19,23 @@ class BinaryTree:
         self.base_node = node
     
     def __balancetree(self) -> None:
+
+        # Find the deepest path on left side of tree
         pass
+
+    def __getdeepestpath(self, node: Node):
+        """
+        Returns a list containing the nodes taken to reach the deepest node.
+        """
+        if not node:
+            return []
+        
+        left = self.__getdeepestpath(node.left)
+        right = self.__getdeepestpath(node.right)
+
+        deepest_path = max(left, right, key=len)
+
+        return [node] + deepest_path
 
     def __movenodes(self, node: Node) -> None:
         """
