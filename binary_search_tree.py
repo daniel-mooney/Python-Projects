@@ -1,3 +1,6 @@
+from asyncio import base_events
+
+
 class Node:
     """
     The class node is used as an element of a data structure class, such as in BinaryTree in this
@@ -13,13 +16,13 @@ class Node:
 
 
 class BinaryTree:
-    def __init__(self, node: Node) -> None:
+    def __init__(self, node: Node = None) -> None:
         self.base_node = node
     
     def __balancetree(self) -> None:
         pass
 
-    def __movenode(self, node: Node) -> None:
+    def __movenodes(self, node: Node) -> None:
         """
         Used to move the nodes of a removed parent node to somewhere else in the tree.
         """
@@ -27,18 +30,23 @@ class BinaryTree:
             return None
         
         self.add_node(node)
-        self.__movenode(node.left)
-        self.__movenode(node.right)
+        self.__movenodes(node.left)
+        self.__movenodes(node.right)
 
     def add_node(self, node: Node) -> bool:
         """
-        Rebalances the tree afterwards.
+        Rebalances the tree afterwards. If the base node is `None`, then the newly added node will
+        become the new base node.
 
         Nodes are not allowed to have the same key of an existing node. This will result in an
         unsuccessful add_node call.
         """
         if not isinstance(node, Node):
             return False
+
+        if not self.base_node:
+            self.base_node = node
+            return True
 
         current_node = self.base_node
 
@@ -59,23 +67,32 @@ class BinaryTree:
     
     def remove_node(self, key: int) -> bool:
         """
-        Rebalances the tree afterwards.
+        Rebalances the tree afterwards. If the base node is being removed, priority is given
+        to the left node of base node as the new base node. If base node has no connected nodes,
+        it is set as `None`. 
         """
         current_node = self.base_node
-        removed_node = None
+
+        if key == self.base_node:
+            left = self.base_node.left
+            right = self.base_node.right
+
+            self.base_node = left if left else right if right else None
 
         while current_node:
             # Loop until node is found or bottom of tree reached
             if current_node.left.key == key:
-                removed_node = current_node.left
+                self.__movenodes(current_node.left.left)        # Move removed node's children nodes
+                self.__movenodes(current_node.left.right)
                 current_node.left = None
-                break
+                return True
             if current_node.right.key == key:
-                removed_node = current_node.right
+                self.__movenodes(current_node.right.left)       # Move removed node's children nodes
+                self.__movenodes(current_node.right.right)
                 current_node.right = None
-                break 
+                return True 
 
-        return True
+        return False
 
     def get_value(self, key: int) -> any:
         """

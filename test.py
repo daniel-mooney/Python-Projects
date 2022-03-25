@@ -10,5 +10,7 @@ tree.add_node(Node(13, 7.9))
 tree.add_node(Node(6, "ahhhh"))
 tree.add_node(Node(8, "test"))
 
+tree.remove_node(13)
+
 print(tree.get_value(8))
 # print(x)
