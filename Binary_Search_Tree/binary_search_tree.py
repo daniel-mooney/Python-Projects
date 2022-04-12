@@ -32,9 +32,6 @@ class BinaryTree:
         combined_path = left + [self.base_node] + right       
         mid_point = len(combined_path) // 2 if len(combined_path) % 2 == 1 else len(combined_path) // 2 - 1
 
-        print([*map(lambda x: x.key, combined_path)])
-        print(mid_point)
-        print(combined_path[mid_point].key)
         self.base_node = combined_path[mid_point]      
 
 
@@ -50,13 +47,15 @@ class BinaryTree:
 
         return [node] + deepest_path
 
-    def __movenodes(self, node: Node) -> None:
+    def __movenodes(self, node: Node, includeParent: bool = False) -> None:
         """
         Used to move the nodes of a removed parent node to somewhere else in the tree.
         """
         if node == None:
             return None
 
+        if includeParent:
+            self.add_node(node)
         if node.right:
             self.add_node(node.right)
             self.__movenodes(node.right)

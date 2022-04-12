@@ -1,16 +1,9 @@
-from binary_search_tree import *
 
-tree = BinaryTree(Node(10, 24))
 
-tree.add_node(Node(5, "cool"))
-tree.add_node(Node(12, 4.23))
-x = tree.add_node(Node(11, 65))
-tree.add_node(Node(14, 4.29))
-tree.add_node(Node(13, 7.9))
-tree.add_node(Node(6, "ahhhh"))
-tree.add_node(Node(8, "test"))
+with open("test.txt", "wb") as binary_file:
+    i = 123456789
+    binary_file.write(i.to_bytes(4, byteorder="big"))
 
-tree.remove_node(10)
+x = "1234"
 
-print(tree.get_value(6))
-# print(x)
+print(x[0:2])
