@@ -1,4 +1,3 @@
-from sys import byteorder
 from note_frequencies import note_to_freq
 
 
