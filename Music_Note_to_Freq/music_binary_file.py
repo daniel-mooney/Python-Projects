@@ -25,7 +25,7 @@ brightside = [140, ('d5', 2), ('f#5', 2), ('d6', 2), ('f#5', 2), ('e5', 2), ('e6
 
 opened = brightside
 
-with open("./Music_Note_to_Freq/thousand_miles.txt", "wb") as binary_file:
+with open("./Music_Note_to_Freq/song_files/thousand_miles.txt", "wb") as binary_file:
     bpm = opened[0]
     binary_file.write(bpm.to_byte(2, byteorder="big"))
 
