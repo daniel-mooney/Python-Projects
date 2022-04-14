@@ -35,3 +35,15 @@ def note_to_freq(note: str) -> float:
     octave = int(note[-1])
 
     return base_freq[pitch] * 2**octave
+
+
+def main():
+    notes = ["a4", "F#3", "C5", "gb2"]
+
+    for note in notes:
+        freq = note_to_freq(note)
+        print(f"{note} = {freq}Hz")
+
+
+if __name__ == "__main__":
+    main()
