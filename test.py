@@ -1,9 +1,7 @@
+import regex as re
 
+note = "b#7"
 
-with open("test.txt", "wb") as binary_file:
-    i = 123456789
-    binary_file.write(i.to_bytes(4, byteorder="big"))
+r = re.match(r"[A-Ga-g]+[#b]*\d+", note)
 
-x = "1234"
-
-print(x[0:2])
+print(r)
