@@ -1,4 +1,5 @@
 import random
+import numpy
 
 # Useful for creating large data files consisiting of numbers for other programs
 
@@ -12,4 +13,9 @@ def generate_list(a, b, length, rounding = 2):
     return None
 
 
-print(generate_list(0.0, 0.9, 5))
+def main():
+    print(generate_list(0.0, 0.9, 5))
+
+
+if __name__ == "__main__":
+    main()
