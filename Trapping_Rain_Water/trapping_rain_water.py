@@ -18,6 +18,9 @@ def find_boundings(heights: list[int], index: int) -> tuple[int, int]:
             left_bound = i + 1
             break
     
+    if left_up and left_bound == index:
+        left_bound = 0
+    
     # Find right bound
     for i in range(index, len(heights)):
         if heights[i] > heights[index]:
@@ -26,6 +29,9 @@ def find_boundings(heights: list[int], index: int) -> tuple[int, int]:
         if right_up and heights[i] < heights[i-1]:
             right_bound = i - 1
             break
+    
+    if right_up and right_bound == index:
+        right_bound = len(heights) - 1
     
     return (left_bound, right_bound)
 
@@ -60,7 +66,7 @@ def trapping_rainwater(heights: list[int]) -> int:
 
 
 def main() -> None:
-    heights = [0,1,0,2,1,0,1,3,2,1,2,1]
+    heights = [1,2,3,4,5,6,7,8,0,8]
     water_trapped = trapping_rainwater(heights)
 
     print(water_trapped)
