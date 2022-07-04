@@ -14,7 +14,7 @@ def generate_list(a, b, length, rounding = 2):
 
 
 def main():
-    print(generate_list(0.0, 0.9, 5))
+    print(generate_list(1, 22, 20))
 
 
 if __name__ == "__main__":
