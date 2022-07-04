@@ -15,6 +15,7 @@ def generate_list(a, b, length, rounding = 2):
 
 def main():
     print(generate_list(1, 22, 20))
+    print(generate_list(-10, 10, 5))
 
 
 if __name__ == "__main__":
