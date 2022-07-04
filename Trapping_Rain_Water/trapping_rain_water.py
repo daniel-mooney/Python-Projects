@@ -1,4 +1,7 @@
+
 import time
+
+# TODO: fix up overlap bug
 
 def find_boundings(heights: list[int], index: int) -> tuple[int, int]:
     left_bound = index
@@ -55,7 +58,7 @@ def trapping_rainwater(heights: list[int]) -> int:
         if left == i or right == i:
             i += 1
             continue
-        
+        print(f"{i}: {left, right} = {calculate_water_held(heights, left, right)}")
         water_trapped += calculate_water_held(heights, left, right)
         i = right
     
@@ -63,7 +66,7 @@ def trapping_rainwater(heights: list[int]) -> int:
 
 
 def main() -> None:
-    heights = [1,2,3,4,5,6,7,8,0,8]
+    heights = [20, 9, 18, 20, 20, 8, 22, 8, 14, 13, 22, 1, 11, 8, 12, 7, 8, 18, 5, 1]
     water_trapped = trapping_rainwater(heights)
 
     print(water_trapped)
